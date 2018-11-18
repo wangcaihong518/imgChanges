@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>js实现点击图片放大缩小</title>
+</head>
+<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	
+	.box {
+		width: 200px;
+		margin: 0 auto;
+	}
+	#img {
+		width: 160px;
+		height: 160px;
+		/*transition: all .2s;*/
+	}
+</style>
+<body>
+	<div class="box">
+		<img src="./img/1.jpg" id="img">
+		<br>
+		<button id="max">放大</button>
+		<button id="min">缩小</button>
+	</div>
+</body>
+<script type="text/javascript">
+	// 获取元素
+	let img = document.querySelector('#img');
+		max = document.querySelector('#max');
+		min = document.querySelector('#min');
+
+	// 放大点击
+	max.onclick = function(){
+		// 调用放大函数
+		maxImg();
+	}
+
+	// 放大函数
+
+	let endWidth = img.offsetWidth * 2;// 最终极限值不变
+	let endHeight = img.offsetHeight *2;
+	function maxImg(){
+		// 点击慢慢放大
+		let maxWidth = img.offsetWidth * 1.3;
+		let maxHeight = img.offsetHeight * 1.3;
+
+		
+		let maxTimer = setInterval(function(){
+			// img.width = img.width * 1.05;
+			// img.height = img.height * 1.05;
+			if(img.offsetWidth < maxWidth){
+
+				if(img.offsetWidth < endWidth){
+					img.style.width = img.offsetWidth * 1.05 + 'px'; 
+					img.style.height = img.offsetHeight * 1.05 + 'px';
+				}else {
+					alert('不能再放大了');
+					clearInterval(maxTimer);
+				}
+				
+			}else {
+				clearInterval(maxTimer);
+			}
+			
+		},20);
+
+	}
+
+
+	// 缩小
+	min.onclick = function(){
+		minImg();
+	}
+
+	let endMinWidth = img.offsetWidth * 0.5;
+	let endMinHeight = img.offsetHeight * 0.5;
+	function minImg(){
+		let minWidth = img.offsetWidth * 0.7;
+		let minHeight = img.offsetHeight * 0.7;
+
+		let minTimer = setInterval(function(){
+			if(img.offsetWidth > minWidth){
+				
+				if(img.offsetWidth > endMinWidth){
+					img.style.width = img.offsetWidth * 0.95 +'px';
+					img.style.height = img.offsetHeight * 0.95 + 'px';
+				}else {
+					alert('不能再缩小了');
+					clearInterval(minTimer);
+				}
+			}else {
+				clearInterval(minTimer);
+			}
+			
+		},20);
+	}
+
+</script>
+</html>
